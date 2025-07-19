@@ -1,6 +1,6 @@
 import CodeBlock from "../codeblock";
 import { useNavigate } from "react-router-dom";
-import { FaArrowRight, FaDatabase, FaFileAlt } from "react-icons/fa";
+import { FaArrowRight, FaDatabase } from "react-icons/fa";
 export default function Contents() {
   const navigate = useNavigate();
   const handleNavClick = (pageId: string) => {
@@ -27,9 +27,9 @@ const manager = new DatabaseManager({
 await manager.connect();`;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
       {/* Hero Section with Quick Start Code on the right */}
-      <div className="mb-16 flex flex-col md:flex-row md:items-center md:justify-between gap-10">
+      <div className="mb-1 flex flex-col md:flex-row md:items-center md:justify-between gap-10">
         <div className="flex-1 text-center md:text-left">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl mb-8 shadow-xl">
             <FaDatabase className="w-10 h-10 text-white" />
@@ -59,10 +59,6 @@ await manager.connect();`;
         </div>
         <div className="flex-1 flex items-center justify-center w-full md:w-auto">
           <div className="w-full max-w-xl">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4 flex items-center space-x-3">
-              <FaFileAlt className="w-6 h-6 text-blue-600" />
-              <span>Quick Start</span>
-            </h2>
             <CodeBlock
               code={quickStartCode}
               language="typescript"
