@@ -1,4 +1,4 @@
-import CodeBlock from "../codeblock";
+import CodeBlock from "../utilities/codeblock";
 import { FaDatabase, FaTrash, FaUsers, FaBolt } from "react-icons/fa";
 
 export default function DatabaseMethods() {

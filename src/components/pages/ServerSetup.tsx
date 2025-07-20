@@ -1,4 +1,4 @@
-import CodeBlock from "../codeblock";
+import CodeBlock from "../utilities/codeblock";
 import { FaGlobe, FaKey, FaServer, FaShield } from "react-icons/fa6";
 
 export default function ServerSetup() {

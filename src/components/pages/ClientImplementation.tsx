@@ -1,4 +1,4 @@
-import CodeBlock from "../codeblock";
+import CodeBlock from "../utilities/codeblock";
 import {
   FaCode,
   FaBolt,

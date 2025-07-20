@@ -1,4 +1,4 @@
-import CodeBlock from "../codeblock";
+import CodeBlock from "../utilities/codeblock";
 import { useNavigate } from "react-router-dom";
 import { FaArrowRight, FaDatabase } from "react-icons/fa";
 export default function Contents() {
