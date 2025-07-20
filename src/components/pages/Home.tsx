@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import CodeBlock from "../utilities/codeblock";
-import { FaExternalLinkAlt } from "react-icons/fa";
 
 export default function Contents() {
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ export default function Contents() {
     `const DB = await manager.createDatabase("path/to/your/database");`;
 
   const code = (
-    <div className="flex-1 flex items-center justify-center">
+    <div className="flex-1 flex items-center justify-center w-full md:w-auto">
       <div className="w-full max-w-xl">
         <CodeBlock
           code={quickStartCode}
@@ -54,7 +53,7 @@ export default function Contents() {
   const getStartedButton = (
     <button
       onClick={() => handleNavClick("server-setup")}
-      className="px-8 py-4 bg-transparent font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center space-x-2 border border-slate-300"
+      className="px-8 py-4 bg-transparent font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2 border border-slate-300"
     >
       <span className="text-[17px] bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
         Get Started
@@ -65,30 +64,33 @@ export default function Contents() {
   const apiReferenceButton = (
     <button
       onClick={() => handleNavClick("database-methods")}
-      className="px-8 py-4 text-slate-600 bg-transparent font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center space-x-2 border border-slate-300"
+      className="px-8 py-4 bg-transparent font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2 border border-slate-300"
     >
-      <span className="text-[17px] ">API Reference</span>
-      <FaExternalLinkAlt />
+      <span className="text-[17px] bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        API Reference
+      </span>
     </button>
   );
 
   const buttons = (
-    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+    <div className="flex sm:flex-row gap-4 justify-center md:justify-center">
       {getStartedButton}
       {apiReferenceButton}
     </div>
   );
 
   const body = (
-    <div className="flex-1 text-center">
+    <div className="flex-1 text-center md:text-center">
       {heading} {description} {buttons}
     </div>
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex flex-col md:flex-row items-center gap-10">
-      {body}
-      {code}
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-10">
+        {body}
+        {code}
+      </div>
     </div>
   );
 }
