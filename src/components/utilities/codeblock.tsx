@@ -18,7 +18,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, id }) => {
     <button
       onClick={() => handleCopy(code, id)}
       aria-label={`Copy code snippet: ${id}`}
-      className="absolute top-2 right-2 flex items-center space-x-1 text-slate-600 hover:text-slate-800 transition-colors text-sm"
+      className="hidden md:flex absolute top-2 right-2 items-center space-x-1 text-slate-600 hover:text-slate-800 transition-colors text-sm"
     >
       {copiedCode === id ? (
         <FaCheck className="w-4 h-4" />
@@ -29,7 +29,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, id }) => {
   );
 
   const codeBlockBody = (
-    <pre className="relative bg-slate-100 p-6 rounded-xl overflow-x-auto text-sm">
+    <pre className="relative bg-slate-100 p-3 rounded-xl overflow-x-auto text-sm">
       {copyButton}
       <code
         className={`language-${language}`}
