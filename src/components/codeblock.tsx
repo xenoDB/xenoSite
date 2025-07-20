@@ -1,76 +1,50 @@
 import Prism from "prismjs";
-import "prismjs/components/prism-jsx";
-import "prismjs/components/prism-tsx";
-import "prismjs/components/prism-json";
-import "prismjs/themes/prism-tomorrow.css";
-import "prismjs/components/prism-typescript";
-import "prismjs/components/prism-javascript";
-import { FaCheck, FaCopy } from "react-icons/fa6";
-import React, { useEffect, useState } from "react";
+import * as React from "react";
+import "prismjs/themes/prism-coy.min.css";
+import { FaCheck, FaCopy } from "react-icons/fa";
 
-type CodeBlockProps = {
-  code: string;
-  language: string;
-  id: string;
-};
+type CodeBlockProps = { code: string; language: string; id: string };
 
 const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, id }) => {
-  const [highlighted, setHighlighted] = useState<string>("");
-  const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const [copiedCode, setCopiedCode] = React.useState<string | null>(null);
 
   const handleCopy = async (text: string, id: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedCode(id);
-      setTimeout(() => setCopiedCode(null), 1500);
-    } catch (err) {
-      console.error("Copy failed:", err);
-    }
+    await navigator.clipboard.writeText(text);
+    setCopiedCode(id);
+    setTimeout(() => setCopiedCode(null), 1500);
   };
 
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const grammar = Prism.languages[language] || Prism.languages.javascript;
-        const html = Prism.highlight(code, grammar, language);
-        setHighlighted(html);
-      } catch {
-        setHighlighted(code);
-      }
-    };
-    load();
-  }, [code, language]);
-
-  return (
-    <div className="relative">
-      <div className="flex items-center justify-between bg-slate-800 px-4 py-2 rounded-t-xl">
-        <span className="text-slate-300 text-sm font-medium">{language}</span>
-        <button
-          aria-label={`Copy code snippet: ${id}`}
-          onClick={() => handleCopy(code, id)}
-          className="flex items-center space-x-1 text-slate-400 hover:text-white transition-colors text-sm"
-        >
-          {copiedCode === id ? (
-            <>
-              <FaCheck className="w-4 h-4" />
-              <span>Copied!</span>
-            </>
-          ) : (
-            <>
-              <FaCopy className="w-4 h-4" />
-              <span>Copy</span>
-            </>
-          )}
-        </button>
-      </div>
-      <pre className="bg-slate-900 text-slate-100 p-6 rounded-b-xl overflow-x-auto text-sm">
-        <code
-          className={`language-${language}`}
-          dangerouslySetInnerHTML={{ __html: highlighted }}
-        />
-      </pre>
-    </div>
+  const copyButton = (
+    <button
+      onClick={() => handleCopy(code, id)}
+      aria-label={`Copy code snippet: ${id}`}
+      className="absolute top-2 right-2 flex items-center space-x-1 text-slate-600 hover:text-slate-800 transition-colors text-sm"
+    >
+      {copiedCode === id ? (
+        <FaCheck className="w-4 h-4" />
+      ) : (
+        <FaCopy className="w-4 h-4" />
+      )}
+    </button>
   );
+
+  const codeBlockBody = (
+    <pre className="relative bg-slate-100 p-6 rounded-xl overflow-x-auto text-sm">
+      {copyButton}
+      <code
+        className={`language-${language}`}
+        dangerouslySetInnerHTML={{
+          __html: Prism.highlight(
+            code,
+            Prism.languages[language] || Prism.languages.javascript,
+            language
+          ),
+        }}
+      />
+    </pre>
+  );
+
+  return <div className="relative">{codeBlockBody}</div>;
 };
 
 export default CodeBlock;
