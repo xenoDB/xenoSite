@@ -1,72 +1,94 @@
-import CodeBlock from "../utilities/codeblock";
 import { useNavigate } from "react-router-dom";
-import { FaArrowRight, FaDatabase } from "react-icons/fa";
+import CodeBlock from "../utilities/codeblock";
+import { FaExternalLinkAlt } from "react-icons/fa";
+
 export default function Contents() {
   const navigate = useNavigate();
-  const handleNavClick = (pageId: string) => {
-    navigate(`/${pageId}`);
-  };
+  const handleNavClick = (pageId: string) => navigate(`/${pageId}`);
 
-  const quickStartCode = `// Server Setup
-import { DatabaseServer } from "@xenodb/server";
+  const quickStartCode =
+    `import { DatabaseServer } from "@xenodb/server";\n` +
+    `import { DatabaseManager } from "@xenodb/client";\n` +
+    `\n` +
+    `const server = new DatabaseServer({\n` +
+    `  port: 8080,\n` +
+    `  auth: "YOUR_SECRET_TOKEN"\n` +
+    `});\n` +
+    `\n` +
+    `const manager = new DatabaseManager({\n` +
+    `  url: "localhost",\n` +
+    `  port: 8080,\n` +
+    `  auth: "YOUR_SECRET_TOKEN"\n` +
+    `});\n` +
+    `\n` +
+    `await manager.connect();\n` +
+    `\n` +
+    `const DB = await manager.createDatabase("path/to/your/database");`;
 
-const server = new DatabaseServer({
-  port: 8080,
-  auth: "YOUR_SECRET_TOKEN"
-});
+  const code = (
+    <div className="flex-1 flex items-center justify-center">
+      <div className="w-full max-w-xl">
+        <CodeBlock
+          code={quickStartCode}
+          language="typescript"
+          id="quick-start"
+        />
+      </div>
+    </div>
+  );
 
-// Client Connection
-import { DatabaseManager } from "@xenodb/client";
+  const heading = (
+    <p className="flex justify-center font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-8">
+      <h1 className="text-6xl">XenoDB</h1>
+      <p className="text-2xl">™</p>
+    </p>
+  );
 
-const manager = new DatabaseManager({
-  url: "localhost",
-  port: 8080,
-  auth: "YOUR_SECRET_TOKEN"
-});
+  const description = (
+    <p className="text-2xl text-slate-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+      A modern, type-safe database solution with real-time capabilities, built
+      for performance and developer experience.
+    </p>
+  );
 
-await manager.connect();`;
+  const getStartedButton = (
+    <button
+      onClick={() => handleNavClick("server-setup")}
+      className="px-8 py-4 bg-transparent font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center space-x-2 border border-slate-300"
+    >
+      <span className="text-[17px] bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        Get Started
+      </span>
+    </button>
+  );
+
+  const apiReferenceButton = (
+    <button
+      onClick={() => handleNavClick("database-methods")}
+      className="px-8 py-4 text-slate-600 bg-transparent font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center space-x-2 border border-slate-300"
+    >
+      <span className="text-[17px] ">API Reference</span>
+      <FaExternalLinkAlt />
+    </button>
+  );
+
+  const buttons = (
+    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      {getStartedButton}
+      {apiReferenceButton}
+    </div>
+  );
+
+  const body = (
+    <div className="flex-1 text-center">
+      {heading} {description} {buttons}
+    </div>
+  );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-      {/* Hero Section with Quick Start Code on the right */}
-      <div className="mb-1 flex flex-col md:flex-row md:items-center md:justify-between gap-10">
-        <div className="flex-1 text-center md:text-left">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-3xl mb-8 shadow-xl">
-            <FaDatabase className="w-10 h-10 text-white" />
-          </div>
-          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6">
-            XenoDB
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-600 mb-8 max-w-3xl mx-auto md:mx-0 leading-relaxed">
-            A modern, type-safe database solution with real-time capabilities,
-            built for performance and developer experience.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-            <button
-              onClick={() => handleNavClick("server-setup")}
-              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center space-x-2"
-            >
-              <span>Get Started</span>
-              <FaArrowRight className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => handleNavClick("database-methods")}
-              className="px-8 py-4 bg-white text-slate-700 font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 border border-slate-200 hover:border-slate-300"
-            >
-              View API Reference
-            </button>
-          </div>
-        </div>
-        <div className="flex-1 flex items-center justify-center w-full md:w-auto">
-          <div className="w-full max-w-xl">
-            <CodeBlock
-              code={quickStartCode}
-              language="typescript"
-              id="quick-start"
-            />
-          </div>
-        </div>
-      </div>
+    <div className="max-w-7xl mx-auto px-4 lg:px-8 py-10 flex flex-col md:flex-row items-center gap-10">
+      {body}
+      {code}
     </div>
   );
 }
