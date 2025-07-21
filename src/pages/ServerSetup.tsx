@@ -1,3 +1,7 @@
+import CodeBlock from "../utilities/codeblock";
+import { PiCertificateFill } from "react-icons/pi";
+import { FcDataConfiguration } from "react-icons/fc";
+import { BsFillInfoSquareFill } from "react-icons/bs";
 import {
   FaGlobe,
   FaKey,
@@ -5,10 +9,6 @@ import {
   FaServer,
   FaShield,
 } from "react-icons/fa6";
-import CodeBlock from "../utilities/codeblock";
-import { PiCertificateFill } from "react-icons/pi";
-import { FcDataConfiguration } from "react-icons/fc";
-import { BsFillInfoSquareFill } from "react-icons/bs";
 
 const heading = (
   <div className="text-center mb-12">

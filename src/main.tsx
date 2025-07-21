@@ -7,8 +7,8 @@ import Navigation from "./components/Navbar.tsx";
 import ServerSetup from "./pages/ServerSetup.tsx";
 import StorageLayout from "./pages/StorageLayout.tsx";
 import DatabaseMethods from "./pages/DatabaseMethods.tsx";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import ClientImplementation from "./pages/ClientImplementation.tsx";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 export const RootLayout = () => {
   return (
