@@ -3,9 +3,14 @@ import * as React from "react";
 import "prismjs/themes/prism-coy.min.css";
 import { FaCheck, FaCopy } from "react-icons/fa";
 
-type CodeBlockProps = { code: string; language: string; id: string };
+type CodeBlockProps = {
+  code: string;
+  language: string;
+  id: string;
+  color?: string;
+};
 
-const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, id }) => {
+const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, id, color }) => {
   const [copiedCode, setCopiedCode] = React.useState<string | null>(null);
 
   const handleCopy = async (text: string, id: string) => {
@@ -29,7 +34,11 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, id }) => {
   );
 
   const codeBlockBody = (
-    <pre className="relative bg-slate-100 p-3 rounded-xl overflow-x-auto text-sm">
+    <pre
+      className={`relative bg-${
+        color || "slate"
+      }-100 p-3 rounded-xl overflow-x-auto text-sm`}
+    >
       {copyButton}
       <code
         className={`language-${language}`}
