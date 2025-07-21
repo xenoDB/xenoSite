@@ -7,6 +7,8 @@ import {
 } from "react-icons/fa6";
 import CodeBlock from "../utilities/codeblock";
 import { PiCertificateFill } from "react-icons/pi";
+import { FcDataConfiguration } from "react-icons/fc";
+import { BsFillInfoSquareFill } from "react-icons/bs";
 
 const heading = (
   <div className="text-center mb-12">
@@ -94,10 +96,10 @@ const serverSetup = (
 );
 
 const sslOptions = (
-  <div className="flex items-start space-x-3 p-4 bg-gray-50 border border-gray-200 rounded-xl">
+  <div className="flex items-start space-x-3 p-4 bg-purple-50 border border-purple-200 rounded-xl lg:row-span-2">
     <div className="flex-1 min-w-0">
-      <h4 className="flex font-semibold text-gray-800 mb-1 gap-2">
-        <FaListCheck className="w-5 h-5 text-gray-600 mt-0.5" />
+      <h4 className="flex font-semibold text-purple-800 mb-1 gap-2">
+        <FcDataConfiguration className="w-5 h-5 text-purple-600 mt-0.5" />
         Server Configuration Options
       </h4>
       {/* Code wrapper with scroll */}
@@ -123,31 +125,9 @@ const sslOptions = (
           }
           language="typescript"
           id="ssl-server"
+          color="purple"
         />
       </div>
-    </div>
-  </div>
-);
-
-const extraInformation = (
-  <div className="flex items-start space-x-3 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-    <div>
-      <h4 className="flex font-semibold text-blue-800 mb-1 gap-2">
-        <FaShield className="w-5 h-5 text-blue-600 mt-0.5" />
-        Certificate Management
-      </h4>
-      <ul className="text-blue-700 text-sm space-y-1 list-disc pl-5">
-        <li>
-          Make sure to use a strong, unique authentication token. This token
-          will be required by all clients connecting to your database.
-        </li>
-
-        <li>
-          The SSL configuration is optional, but for production environments,
-          it's recommended to enable SSL/TLS encryption to ensure secure data
-          transmission.
-        </li>
-      </ul>
     </div>
   </div>
 );
@@ -186,6 +166,44 @@ const certificateManagement = (
   </div>
 );
 
+const extraInformation = (
+  <div className="flex items-start space-x-3 p-4 bg-blue-50 border border-blue-200 rounded-xl lg:col-span-2">
+    <div>
+      <h4 className="flex font-semibold text-blue-800 mb-1 gap-2">
+        <BsFillInfoSquareFill className="w-5 h-5 text-blue-600 mt-0.5" />
+        Extra Information
+      </h4>
+      <ul className="text-blue-700 text-sm space-y-1 list-disc pl-5">
+        <li>
+          Make sure to use a strong, unique authentication token. This token
+          will be required by all clients connecting to your database.
+        </li>
+
+        <li>
+          The SSL configuration is optional, but for production environments,
+          it's recommended to enable SSL/TLS encryption to ensure secure data
+          transmission.
+        </li>
+      </ul>
+    </div>
+  </div>
+);
+
+const configInfoTable = (
+  <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
+    <h2 className="text-2xl font-bold text-slate-800 mb-6">
+      SSL/HTTPS Configuration
+    </h2>
+
+    <div className="mt-4 sm:mt-6 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 w-full">
+      {sslOptions}
+      {bestPractices}
+      {certificateManagement}
+      {extraInformation}
+    </div>
+  </div>
+);
+
 export default function ServerSetup() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -197,18 +215,7 @@ export default function ServerSetup() {
 
       {serverSetup}
 
-      <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
-        <h2 className="text-2xl font-bold text-slate-800 mb-6">
-          SSL/HTTPS Configuration
-        </h2>
-
-        <div className="mt-4 sm:mt-6 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 w-full">
-          {sslOptions}
-          {extraInformation}
-          {bestPractices}
-          {certificateManagement}
-        </div>
-      </div>
+      {configInfoTable}
     </div>
   );
 }
