@@ -1,14 +1,14 @@
 import "./index.css";
 import { StrictMode } from "react";
+import Contents from "./pages/Home.tsx";
+import Footer from "./components/Footer.tsx";
 import { createRoot } from "react-dom/client";
-import Contents from "./components/pages/Home.tsx";
-import Footer from "./components/layouts/Footer.tsx";
-import Navigation from "./components/layouts/Navbar.tsx";
-import ServerSetup from "./components/pages/ServerSetup.tsx";
-import StorageLayout from "./components/pages/StorageLayout.tsx";
-import DatabaseMethods from "./components/pages/DatabaseMethods.tsx";
+import Navigation from "./components/Navbar.tsx";
+import ServerSetup from "./pages/ServerSetup.tsx";
+import StorageLayout from "./pages/StorageLayout.tsx";
+import DatabaseMethods from "./pages/DatabaseMethods.tsx";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import ClientImplementation from "./components/pages/ClientImplementation.tsx";
+import ClientImplementation from "./pages/ClientImplementation.tsx";
 
 export const RootLayout = () => {
   return (
