@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import CodeBlock from "../utilities/codeblock";
-import useScrollRestoration from "../hooks/retainScroll";
+import useScrollRestoration from "../hooks/RetainScroll";
 
 export default function Contents() {
   useScrollRestoration();

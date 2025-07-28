@@ -7,6 +7,7 @@ import Navigation from "./components/Navbar.tsx";
 import ServerSetup from "./pages/ServerSetup.tsx";
 import StorageLayout from "./pages/StorageLayout.tsx";
 import DatabaseMethods from "./pages/DatabaseMethods.tsx";
+import ScrollToTopButton from "./components/ScrollToTopButton.tsx";
 import ClientImplementation from "./pages/ClientImplementation.tsx";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
@@ -16,6 +17,7 @@ export const RootLayout = () => {
       <Navigation />
       <main className="flex-1 pt-20">
         <Outlet />
+        <ScrollToTopButton />
       </main>
       <Footer />
     </div>

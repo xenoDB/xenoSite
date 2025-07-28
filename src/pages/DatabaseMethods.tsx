@@ -1,4 +1,4 @@
-import useScrollRestoration from "../hooks/retainScroll";
+import useScrollRestoration from "../hooks/RetainScroll";
 import CodeBlock from "../utilities/codeblock";
 import { FaDatabase, FaTrash, FaUsers, FaBolt } from "react-icons/fa";
 
