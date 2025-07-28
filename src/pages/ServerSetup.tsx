@@ -1,14 +1,7 @@
 import CodeBlock from "../utilities/codeblock";
 import { PiCertificateFill } from "react-icons/pi";
 import { FcDataConfiguration } from "react-icons/fc";
-import { BsFillInfoSquareFill } from "react-icons/bs";
-import {
-  FaGlobe,
-  FaKey,
-  FaListCheck,
-  FaServer,
-  FaShield,
-} from "react-icons/fa6";
+import { FaKey, FaListCheck, FaServer, FaShield } from "react-icons/fa6";
 
 const heading = (
   <div className="text-center mb-12">
@@ -28,15 +21,9 @@ const heading = (
 const features = [
   {
     icon: FaServer,
-    title: "HTTP(S) Server",
+    title: "WS(S) over HTTP(S)",
     description:
-      "Creates a robust HTTP or HTTPS server with RESTful API endpoints for database operations.",
-  },
-  {
-    icon: FaGlobe,
-    title: "WebSocket Support",
-    description:
-      "Built-in WebSocket server for real-time data synchronization with client verification.",
+      "Exposes a RESTful HTTP(S) API for metrics alongside a WebSocket WS(S) endpoint on the same port.",
   },
   {
     icon: FaShield,
@@ -59,7 +46,7 @@ const features = [
         className="bg-white rounded-xl p-6 shadow-lg border border-slate-100"
       >
         <div className="flex items-center justify-left gap-2">
-          <div className="w-7 h-7 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg flex items-center justify-center mb-4">
+          <div className="w-7 h-7 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg flex items-center justify-center mb-2">
             <Icon className="w-5 h-5 text-green-600" />
           </div>
           <h3 className="font-semibold text-slate-800 mb-2">{feature.title}</h3>
@@ -75,19 +62,21 @@ const features = [
 const serverSetup = (
   <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">
     <h2 className="text-2xl font-bold text-slate-800 mb-6">
-      Server Configuration
+      Server Setup & Configuration :
     </h2>
-
     <CodeBlock
       code={
-        `import { readFileSync } from "fs";\n` +
-        `import { DatabaseServer } from "@xenodb/server"; // MJS\n` +
-        `const { DatabaseServer } = require("@xenodb/server"); // CJS\n` +
+        `import { DatabaseServer } from "@xenodb/server"; // For ES Module\n` +
+        `const { DatabaseServer } = require("@xenodb/server"); // For CommonJS\n` +
         `\n` +
         `const server = new DatabaseServer({\n` +
         `  port: 8080,\n` +
         `  auth: "YOUR_SECRET_TOKEN",\n` +
-        `});`
+        `});\n` +
+        `\n` +
+        `server.onStdout(msg => console.log(\`\${new Date().toLocaleString()} - [DATABASE_SERVER] - \${msg}\`));\n` +
+        `\n` +
+        `// Calling \`new DatabaseServer(...)\` automatically starts the server on the port you specified above.`
       }
       language="typescript"
       id="ssl-server"
@@ -102,7 +91,6 @@ const sslOptions = (
         <FcDataConfiguration className="w-5 h-5 text-purple-600 mt-0.5" />
         Server Configuration Options
       </h4>
-      {/* Code wrapper with scroll */}
       <div className="w-full overflow-auto rounded-md">
         <CodeBlock
           code={
@@ -166,40 +154,40 @@ const certificateManagement = (
   </div>
 );
 
-const extraInformation = (
-  <div className="flex items-start space-x-3 p-4 bg-blue-50 border border-blue-200 rounded-xl lg:col-span-2">
-    <div>
-      <h4 className="flex font-semibold text-blue-800 mb-1 gap-2">
-        <BsFillInfoSquareFill className="w-5 h-5 text-blue-600 mt-0.5" />
-        Extra Information
-      </h4>
-      <ul className="text-blue-700 text-sm space-y-1 list-disc pl-5">
-        <li>
-          Make sure to use a strong, unique authentication token. This token
-          will be required by all clients connecting to your database.
-        </li>
-
-        <li>
-          The SSL configuration is optional, but for production environments,
-          it's recommended to enable SSL/TLS encryption to ensure secure data
-          transmission.
-        </li>
-      </ul>
-    </div>
-  </div>
-);
-
 const configInfoTable = (
-  <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
+  <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">
     <h2 className="text-2xl font-bold text-slate-800 mb-6">
-      SSL/HTTPS Configuration
+      SSL Setup & Configuration :
     </h2>
 
     <div className="mt-4 sm:mt-6 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 w-full">
       {sslOptions}
       {bestPractices}
       {certificateManagement}
-      {extraInformation}
+    </div>
+  </div>
+);
+
+const info = (
+  <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
+    <h2 className="text-2xl font-bold text-slate-800 mb-6">
+      Other relevant informations :
+    </h2>
+    <div className="flex items-start space-x-3 p-4 bg-blue-50 border border-blue-200 rounded-xl lg:col-span-2">
+      <div>
+        <ul className="text-blue-700 text-sm space-y-1 list-disc pl-5">
+          <li>
+            Make sure to use a strong, unique authentication token. This token
+            will be required by all clients connecting to your database.
+          </li>
+
+          <li>
+            The SSL configuration is optional, but for production environments,
+            it's recommended to enable SSL/TLS encryption to ensure secure data
+            transmission.
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 );
@@ -209,13 +197,15 @@ export default function ServerSetup() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {heading}
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         {features}
       </div>
 
       {serverSetup}
 
       {configInfoTable}
+
+      {info}
     </div>
   );
 }
