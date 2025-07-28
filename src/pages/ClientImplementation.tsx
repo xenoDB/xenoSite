@@ -1,3 +1,4 @@
+import useScrollRestoration from "../hooks/retainScroll";
 import CodeBlock from "../utilities/codeblock";
 import {
   FaCode,
@@ -7,7 +8,50 @@ import {
   FaExclamation,
 } from "react-icons/fa6";
 
+const features = [
+  {
+    icon: FaBolt,
+    title: "Async/Await API",
+    description:
+      "Modern Promise-based API with full async/await support for clean, readable code.",
+  },
+  {
+    icon: FaShield,
+    title: "Type Safety",
+    description:
+      "Built-in Zod validation and TypeScript generics for runtime and compile-time type checking.",
+  },
+  {
+    icon: FaGlobe,
+    title: "Auto-Reconnection",
+    description:
+      "Intelligent connection management with automatic reconnection and request queuing.",
+  },
+].map((feature, index) => {
+  {
+    const Icon = feature.icon;
+    return (
+      <div
+        key={index}
+        className="bg-white rounded-xl p-6 shadow-lg border border-slate-100"
+      >
+        <div className="flex items-center justify-left gap-2">
+          <div className="w-7 h-7 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg flex items-center justify-center mb-2">
+            <Icon className="w-5 h-5 text-blue-600" />
+          </div>
+          <h3 className="font-semibold text-slate-800 mb-2">{feature.title}</h3>
+        </div>
+        <p className="text-sm text-slate-600 leading-relaxed">
+          {feature.description}
+        </p>
+      </div>
+    );
+  }
+});
+
 export default function ClientImplementation() {
+  useScrollRestoration();
+
   const importCode = `import { DatabaseManager } from "@xenodb/client"; // MJS
 const { DatabaseManager } = require("@xenodb/client"); // CJS`;
 
@@ -65,26 +109,26 @@ const DB = manager.createDatabase<User>("/users");`;
       secure?: boolean;   // Use HTTPS (default: false for localhost)
     };`;
 
-  const features = [
-    {
-      icon: FaBolt,
-      title: "Async/Await API",
-      description:
-        "Modern Promise-based API with full async/await support for clean, readable code.",
-    },
-    {
-      icon: FaShield,
-      title: "Type Safety",
-      description:
-        "Built-in Zod validation and TypeScript generics for runtime and compile-time type checking.",
-    },
-    {
-      icon: FaGlobe,
-      title: "Auto-Reconnection",
-      description:
-        "Intelligent connection management with automatic reconnection and request queuing.",
-    },
-  ];
+  // const features = [
+  //   {
+  //     icon: FaBolt,
+  //     title: "Async/Await API",
+  //     description:
+  //       "Modern Promise-based API with full async/await support for clean, readable code.",
+  //   },
+  //   {
+  //     icon: FaShield,
+  //     title: "Type Safety",
+  //     description:
+  //       "Built-in Zod validation and TypeScript generics for runtime and compile-time type checking.",
+  //   },
+  //   {
+  //     icon: FaGlobe,
+  //     title: "Auto-Reconnection",
+  //     description:
+  //       "Intelligent connection management with automatic reconnection and request queuing.",
+  //   },
+  // ];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -103,27 +147,7 @@ const DB = manager.createDatabase<User>("/users");`;
       </div>
 
       {/* Features Overview */}
-      <div className="grid md:grid-cols-3 gap-6 mb-16">
-        {features.map((feature, index) => {
-          const Icon = feature.icon;
-          return (
-            <div
-              key={index}
-              className="bg-white rounded-xl p-6 shadow-lg border border-slate-100"
-            >
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg flex items-center justify-center mb-4">
-                <Icon className="w-5 h-5 text-blue-600" />
-              </div>
-              <h3 className="font-semibold text-slate-800 mb-2">
-                {feature.title}
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          );
-        })}
-      </div>
+      <div className="grid md:grid-cols-3 gap-6 mb-16">{features}</div>
 
       {/* Import */}
       <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">

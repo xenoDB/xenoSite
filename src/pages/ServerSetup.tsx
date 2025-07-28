@@ -2,6 +2,7 @@ import CodeBlock from "../utilities/codeblock";
 import { PiCertificateFill } from "react-icons/pi";
 import { FcDataConfiguration } from "react-icons/fc";
 import { FaKey, FaListCheck, FaServer, FaShield } from "react-icons/fa6";
+import useScrollRestoration from "../hooks/retainScroll";
 
 const heading = (
   <div className="text-center mb-12">
@@ -193,6 +194,8 @@ const info = (
 );
 
 export default function ServerSetup() {
+  useScrollRestoration();
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {heading}

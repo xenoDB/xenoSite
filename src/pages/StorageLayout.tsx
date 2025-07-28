@@ -1,3 +1,4 @@
+import useScrollRestoration from "../hooks/retainScroll";
 import CodeBlock from "../utilities/codeblock";
 import {
   FaClock,
@@ -8,6 +9,8 @@ import {
 } from "react-icons/fa6";
 
 export default function StorageLayout() {
+  useScrollRestoration();
+
   const storageStructure = `storage/
  └─ path/to/storage/
      ├─ index.json       # maps files to keys (data_*.json -> [keys])

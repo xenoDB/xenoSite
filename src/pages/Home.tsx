@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import CodeBlock from "../utilities/codeblock";
+import useScrollRestoration from "../hooks/retainScroll";
 
 export default function Contents() {
+  useScrollRestoration();
+
   const navigate = useNavigate();
   const handleNavClick = (pageId: string) => navigate(`/${pageId}`);
 
