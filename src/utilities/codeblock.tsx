@@ -7,10 +7,15 @@ type CodeBlockProps = {
   code: string;
   language: string;
   id: string;
-  color?: string;
+  transparent?: boolean;
 };
 
-const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, id, color }) => {
+const CodeBlock: React.FC<CodeBlockProps> = ({
+  code,
+  language,
+  id,
+  transparent,
+}) => {
   const [copiedCode, setCopiedCode] = React.useState<string | null>(null);
 
   const handleCopy = async (text: string, id: string) => {
@@ -35,9 +40,9 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language, id, color }) => {
 
   const codeBlockBody = (
     <pre
-      className={`relative bg-${
-        color || "slate"
-      }-100 p-3 rounded-xl overflow-x-auto text-sm`}
+      className={`relative ${
+        transparent ? "" : "bg-slate-100"
+      } p-3 rounded-xl overflow-x-auto text-sm`}
     >
       {copyButton}
       <code

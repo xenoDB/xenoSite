@@ -112,9 +112,9 @@ const sslOptions = (
             `   }\n` +
             `};`
           }
-          language="typescript"
+          transparent
           id="ssl-server"
-          color="purple"
+          language="typescript"
         />
       </div>
     </div>

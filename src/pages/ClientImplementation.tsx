@@ -229,9 +229,9 @@ const sslOptions = (
             `    secure?: boolean;   // Use HTTPS (default: false) | Only set to true if server has SSL enabled\n` +
             `  };\n`
           }
-          language="typescript"
+          transparent
           id="ssl-server"
-          color="purple"
+          language="typescript"
         />
       </div>
     </div>
