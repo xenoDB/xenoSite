@@ -3,6 +3,21 @@ import CodeBlock from "../utilities/CodeBlock";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { FaDatabase, FaEye, FaPenNib } from "react-icons/fa";
 
+const heading = (
+  <div className="text-center mb-12">
+    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-violet-500 rounded-2xl mb-6 shadow-lg">
+      <FaDatabase className="w-8 h-8 text-white" />
+    </div>
+    <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
+      Database Methods
+    </h1>
+    <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+      Complete API reference for all CRUD operations and batch processing
+      capabilities in XenoDB.
+    </p>
+  </div>
+);
+
 const readIcon = (
   <div className="w-7 h-7 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg flex items-center justify-center mb-2">
     <FaEye className="w-5 h-5 text-blue-600" />
@@ -21,53 +36,92 @@ const deleteIcon = (
   </div>
 );
 
-const methods: {
-  name: string;
-  example: string;
-  category: string;
-  icon: JSX.Element;
-  signature: string;
-  description: string;
-}[] = [
+const features = [
+  {
+    icon: readIcon,
+    title: "Read Methods",
+    description:
+      "Exposes a RESTful HTTP(S) API for metrics alongside a WebSocket WS(S) endpoint on the same port.",
+  },
+  {
+    icon: writeIcon,
+    title: "Write Methods",
+    description:
+      "Full SSL/TLS support with configurable cipher suites and certificate management.",
+  },
+  {
+    icon: deleteIcon,
+    title: "Delete Methods",
+    description:
+      "Token-based authentication system to secure your database server from unauthorized access.",
+  },
+].map((feature, index) => {
+  {
+    return (
+      <div
+        key={index}
+        className="bg-white rounded-xl p-6 shadow-lg border border-slate-100"
+      >
+        <div className="flex items-center justify-left gap-2">
+          {feature.icon}
+          <h3 className="font-semibold text-slate-800 mb-2">{feature.title}</h3>
+        </div>
+        <p className="text-sm text-slate-600 leading-relaxed">
+          {feature.description}
+        </p>
+      </div>
+    );
+  }
+});
+
+const methods = [
   {
     name: "all()",
-    description: "Retrieve all key-value pairs in the database",
+    description:
+      "Retrieve all key-value pairs in the database. Returns a record object containing all entries",
     signature: "all(): Promise<Record<string, T>>",
     category: "Read",
     icon: readIcon,
     example:
-      `// Get all users\n` +
+      `// Before: Database contains multiple entries\n` +
+      `// DB: { "user1": { id: "1", name: "Alice" }, "user2": { id: "2", name: "Bob" } }\n` +
+      `\n` +
       `const allUsers = await DB.all();\n` +
-      `console.log(allUsers);\n` +
-      `// => {\n` +
-      `//   "user1": { id: "user1", name: "Alice" },\n` +
-      `//   "user2": { id: "user2", name: "Bob" }\n` +
-      `// }`,
+      `console.log(allUsers); // { "user1": { id: "1", name: "Alice" }, "user2": { id: "2", name: "Bob" } }\n` +
+      `\n` +
+      `// After: Database remains unchanged (read operation)`,
   },
   {
     name: "has()",
-    description: "Check if a key exists in the database",
+    description:
+      "Check if a key exists in the database. Returns true if key exists, false otherwise",
     signature: "has(key: string): Promise<boolean>",
     category: "Read",
     icon: readIcon,
     example:
-      `// Check if user exists\n` +
+      `// Before: Database contains user1\n` +
+      `// DB: { "user1": { id: "1", name: "Alice" } }\n` +
+      `\n` +
       `const exists = await DB.has("user1");\n` +
-      `console.log(exists);\n` +
-      `// => true`,
+      `console.log(exists); // true\n` +
+      `\n` +
+      `// After: Database remains unchanged (read operation)`,
   },
   {
     name: "get()",
     description:
-      "Fetch the value for a specific key. Returns null if not found",
+      "Fetch the value for a specific key. Returns value if present, otherwise returns null",
     signature: "get(key: string): Promise<T | null>",
     category: "Read",
     icon: readIcon,
     example:
-      `// Get a specific user\n` +
+      `// Before: Database contains user2\n` +
+      `// DB: { "user2": { id: "user2", name: "Bob" } }\n` +
+      `\n` +
       `const user = await DB.get("user2");\n` +
-      `console.log(user);\n` +
-      `// => { id: "user2", name: "Bob" }`,
+      `console.log(user); // { id: "user2", name: "Bob" }\n` +
+      `\n` +
+      `// After: Database remains unchanged (read operation)`,
   },
   {
     name: "set()",
@@ -77,35 +131,47 @@ const methods: {
     category: "Write",
     icon: writeIcon,
     example:
-      `// Set a single user\n` +
+      `// Before: Database is empty or doesn't contain user1\n` +
+      `// DB: {}\n` +
+      `\n` +
       `const user = await DB.set("user1", { id: "user1", name: "Alice" });\n` +
-      `console.log(user);\n` +
-      `// => { id: "user1", name: "Alice" }`,
+      `console.log(user); // { id: "user1", name: "Alice" }\n` +
+      `\n` +
+      `// After: Database contains the new entry\n` +
+      `// DB: { "user1": { id: "user1", name: "Alice" } }`,
   },
   {
     name: "delete()",
     description:
-      "Remove a key-value entry. Returns true if successfully deleted",
+      "Remove a key-value entry. Returns true if successfully deleted, false if key didn't exist",
     signature: "delete(key: string): Promise<boolean>",
     category: "Delete",
     icon: deleteIcon,
     example:
-      `// Delete a user\n` +
+      `// Before: Database doesn't contain user3\n` +
+      `// DB: { "user1": { id: "user1", name: "Alice" } }\n` +
+      `\n` +
       `const deleted = await DB.delete("user3");\n` +
-      `console.log(deleted);\n` +
-      `// => false`,
+      `console.log(deleted); // false\n` +
+      `\n` +
+      `// After: Database remains unchanged (key didn't exist)\n` +
+      `// DB: { "user1": { id: "user1", name: "Alice" } }`,
   },
   {
     name: "getMany()",
-    description: "Batch fetch multiple values. Missing keys yield null",
+    description:
+      "Batch fetch multiple values. Returns array where missing keys yield null",
     signature: "getMany(keys: string[]): Promise<(T | null)[]>",
     category: "Read",
     icon: readIcon,
     example:
-      `// Get multiple users\n` +
+      `// Before: Database contains user1 but not user3\n` +
+      `// DB: { "user1": { id: "user1", name: "Alice" } }\n` +
+      `\n` +
       `const users = await DB.getMany(["user1", "user3"]);\n` +
-      `console.log(users);\n` +
-      `// => [ { id: "user1", name: "Alice" }, null ]`,
+      `console.log(users); // [ { id: "user1", name: "Alice" }, null ]\n` +
+      `\n` +
+      `// After: Database remains unchanged (read operation)`,
   },
   {
     name: "setMany()",
@@ -114,308 +180,178 @@ const methods: {
     category: "Write",
     icon: writeIcon,
     example:
-      `// Create multiple users\n` +
+      `// Before: Database is empty or doesn't contain user2 and user3\n` +
+      `// DB: {}\n` +
+      `\n` +
       `const users = await DB.setMany([\n` +
       `  { key: "user2", value: { id: "user2", name: "Bob" } },\n` +
       `  { key: "user3", value: { id: "user3", name: "Charlie" } }\n` +
       `]);\n` +
-      `console.log(users);\n` +
-      `// => [\n` +
-      `//   { id: "user2", name: "Bob" },\n` +
-      `//   { id: "user3", name: "Charlie" }\n` +
-      `// ]`,
+      `console.log(users); // [ { id: "user2", name: "Bob" }, { id: "user3", name: "Charlie" } ]\n` +
+      `\n` +
+      `// After: Database contains both new entries\n` +
+      `// DB: { "user2": { id: "user2", name: "Bob" }, "user3": { id: "user3", name: "Charlie" } }`,
   },
   {
     name: "deleteMany()",
-    description: "Batch delete entries. Returns array of booleans per key",
+    description:
+      "Batch delete entries. Returns array of booleans indicating success/failure for each key",
     signature: "deleteMany(keys: string[]): Promise<boolean[]>",
     category: "Delete",
     icon: deleteIcon,
     example:
-      `// Delete multiple users\n` +
+      `// Before: Database contains user2 and user3\n` +
+      `// DB: { "user2": { id: "user2", name: "Bob" }, "user3": { id: "user3", name: "Charlie" } }\n` +
+      `\n` +
       `const results = await DB.deleteMany(["user2", "user3"]);\n` +
-      `console.log(results);\n` +
-      `// => [ true, true ]`,
+      `console.log(results); // [ true, true ]\n` +
+      `\n` +
+      `// After: Database is empty (both entries deleted)\n` +
+      `// DB: {}`,
   },
   {
     name: "push()",
-    description: "Push an element into the array at the specified key",
+    description:
+      "Push an element into the array at the specified key. Returns object with the added element and new array length",
     signature:
       "push(key: string, value: ArrayElement<T>): Promise<{ length: number; element: ArrayElement<T> }>",
     category: "Array Operation",
     icon: writeIcon,
     example:
-      `// Push log entries\n` +
-      `await DB.push("logs", { level: "info", msg: "Init" });\n` +
-      `await DB.push("logs", { level: "warn", msg: "High load" });\n` +
-      `const result = await DB.push("logs", { level: "error", msg: "Crash" });\n` +
-      `console.log(result.length);\n` +
-      `// => 3`,
+      `// Before: Database entry contains an array\n` +
+      `// DB: { "logs": ["a", "b", "c", "d"] }\n` +
+      `\n` +
+      `const result = await DB.push("logs", "e");\n` +
+      `console.log(result); // { element: "e", length: 5 }\n` +
+      `\n` +
+      `// After: Element added to end of array\n` +
+      `// DB: { "logs": ["a", "b", "c", "d", "e"] }`,
   },
   {
     name: "unshift()",
-    description: "Unshift an element into the array at the start",
+    description:
+      "Unshift an element into the array at the start. Returns object with the added element and new array length",
     signature:
       "unshift(key: string, value: ArrayElement<T>): Promise<{ length: number; element: ArrayElement<T> }>",
     category: "Array Operation",
     icon: writeIcon,
     example:
-      `// Unshift a system message\n` +
-      `const result = await DB.unshift("logs", { level: "system", msg: "Boot" });\n` +
-      `console.log(result.length);\n` +
-      `// => 4`,
+      `// Before: Database entry contains an array\n` +
+      `// DB: { "logs": ["b", "c", "d", "e"] }\n` +
+      `\n` +
+      `const result = await DB.unshift("logs", "a");\n` +
+      `console.log(result); // { element: "a", length: 5 }\n` +
+      `\n` +
+      `// After: Element added to start of array\n` +
+      `// DB: { "logs": ["a", "b", "c", "d", "e"] }`,
   },
   {
     name: "pop()",
-    description: "Remove and return the last element of the array",
+    description:
+      "Remove and return the last element of the array. Returns object with the removed element and new array length",
     signature:
       "pop(key: string): Promise<{ length: number; element: ArrayElement<T> }>",
     category: "Array Operation",
     icon: deleteIcon,
     example:
-      `// Pop last log\n` +
+      `// Before: Database entry contains an array\n` +
+      `// DB: { "logs": ["a", "b", "c", "d", "e"] }\n` +
+      `\n` +
       `const result = await DB.pop("logs");\n` +
-      `console.log(result.element);\n` +
-      `// => { level: "error", msg: "Crash" }`,
+      `console.log(result); // { element: "e", length: 4 }\n` +
+      `\n` +
+      `// After: Last element removed from array\n` +
+      `// DB: { "logs": ["a", "b", "c", "d"] }`,
   },
   {
     name: "shift()",
-    description: "Remove and return the first element of the array",
+    description:
+      "Remove and return the first element of the array. Returns object with the removed element and new array length",
     signature:
       "shift(key: string): Promise<{ length: number; element: ArrayElement<T> }>",
     category: "Array Operation",
     icon: deleteIcon,
     example:
-      `// Shift first log\n` +
+      `// Before: Database entry contains an array\n` +
+      `// DB: { "logs": ["a", "b", "c", "d", "e"] }\n` +
+      `\n` +
       `const result = await DB.shift("logs");\n` +
-      `console.log(result.element);\n` +
-      `// => { level: "system", msg: "Boot" }`,
+      `console.log(result); // { element: "a", length: 4 }\n` +
+      `\n` +
+      `// After: First element removed from array\n` +
+      `// DB: { "logs": ["b", "c", "d", "e"] }`,
   },
   {
     name: "slice()",
-    description: "Get a slice of the array between start and end indices",
+    description:
+      "Get a slice of the array between start and end indices. Returns array slice or null if key doesn't exist",
     signature:
       "slice(key: string, start: number, end?: number): Promise<ArrayElement<T>[] | null>",
     category: "Array Operation",
     icon: readIcon,
     example:
-      `// View remaining logs\n` +
+      `// Before: Database entry contains an array\n` +
+      `// DB: { "logs": ["a", "b", "c", "d", "e"] }\n` +
+      `\n` +
       `const logs = await DB.slice("logs", 0);\n` +
-      `console.log(logs);\n` +
-      `// => [\n` +
-      `//   { level: "info", msg: "Init" },\n` +
-      `//   { level: "warn", msg: "High load" }\n` +
-      `// ]`,
+      `console.log(logs); // ["a", "b", "c", "d", "e"]\n` +
+      `\n` +
+      `const lastTwoLogs = await DB.slice("logs", -2);\n` +
+      `console.log(lastTwoLogs); // ["d", "e"]\n` +
+      `\n` +
+      `const firstTwoLogs = await DB.slice("logs", 0, 2);\n` +
+      `console.log(firstTwoLogs); // ["a", "b"]\n` +
+      `\n` +
+      `// After: Database remains unchanged (read operation)\n` +
+      `// DB: { "logs": ["a", "b", "c", "d", "e"] }`,
   },
 ];
 
-export default function DatabaseMethods() {
-  //   const methods = [
-  //     {
-  //       name: "all()",
-  //       description: "Retrieve all key-value pairs in the database",
-  //       signature: "all(): Promise<Record<string, T>>",
-  //       category: "Read",
-  //       icon: FaDatabase,
-  //       example: `// Get all users
-  // const allUsers = await DB.all();
-  // console.log(allUsers);
-  // // { "user1": { id: "user1", name: "Alice" }, "user2": { id: "user2", name: "Bob" } }`,
-  //     },
-  //     {
-  //       name: "has()",
-  //       description: "Check if a key exists in the database",
-  //       signature: "has(key: string): Promise<boolean>",
-  //       category: "Read",
-  //       icon: FaDatabase,
-  //       example: `// Check if user exists
-  // const exists = await DB.has("user123");
-  // console.log(exists); // true or false`,
-  //     },
-  //     {
-  //       name: "get()",
-  //       description:
-  //         "Fetch the value for a specific key. Returns null if not found",
-  //       signature: "get(key: string): Promise<T | null>",
-  //       category: "Read",
-  //       icon: FaDatabase,
-  //       example: `// Get a specific user
-  // const user = await DB.get("user123");
-  // if (user) {
-  //   console.log(\`Found user: \${user.name}\`);
-  // } else {
-  //   console.log("User not found");
-  // }`,
-  //     },
-  //     {
-  //       name: "set()",
-  //       description:
-  //         "Create or update a value at the given key. Returns the stored value",
-  //       signature: "set(key: string, value: T): Promise<T>",
-  //       category: "Write",
-  //       icon: FaDatabase,
-  //       example: `// Create or update a user
-  // const user = await DB.set("user123", {
-  //   id: "user123",
-  //   name: "Alice Smith",
-  //   email: "alice@example.com"
-  // });
-  // console.log("Stored:", user);`,
-  //     },
-  //     {
-  //       name: "delete()",
-  //       description:
-  //         "Remove a key-value entry. Returns true if successfully deleted",
-  //       signature: "delete(key: string): Promise<boolean>",
-  //       category: "Delete",
-  //       icon: FaTrash,
-  //       example: `// Delete a user
-  // const deleted = await DB.delete("user123");
-  // if (deleted) {
-  //   console.log("User deleted successfully");
-  // } else {
-  //   console.log("User not found");
-  // }`,
-  //     },
-  //     {
-  //       name: "getMany()",
-  //       description: "Batch fetch multiple values. Missing keys yield null",
-  //       signature: "getMany(keys: string[]): Promise<(T | null)[]>",
-  //       category: "Batch Read",
-  //       icon: FaUsers,
-  //       example: `// Get multiple users at once
-  // const users = await DB.getMany(["user1", "user2", "user3"]);
-  // users.forEach((user, index) => {
-  //   if (user) {
-  //     console.log(\`User \${index + 1}:\`, user.name);
-  //   } else {
-  //     console.log(\`User \${index + 1}: Not found\`);
-  //   }
-  // });`,
-  //     },
-  //     {
-  //       name: "setMany()",
-  //       description: "Batch set multiple entries. Returns array of stored values",
-  //       signature: "setMany(data: { key: string; value: T }[]): Promise<T[]>",
-  //       category: "Batch Write",
-  //       icon: FaUsers,
-  //       example: `// Create multiple users at once
-  // const users = await DB.setMany([
-  //   { key: "user1", value: { id: "user1", name: "Alice" } },
-  //   { key: "user2", value: { id: "user2", name: "Bob" } },
-  //   { key: "user3", value: { id: "user3", name: "Charlie" } }
-  // ]);
-  // console.log(\`Created \${users.length} users\`);`,
-  //     },
-  //     {
-  //       name: "deleteMany()",
-  //       description: "Batch delete entries. Returns array of booleans per key",
-  //       signature: "deleteMany(keys: string[]): Promise<boolean[]>",
-  //       category: "Batch Delete",
-  //       icon: FaTrash,
-  //       example: `// Delete multiple users
-  // const results = await DB.deleteMany(["user1", "user2", "user3"]);
-  // const deletedCount = results.filter(Boolean).length;
-  // console.log(\`Deleted \${deletedCount} out of \${results.length} users\`);`,
-  //     },
-  //   ];
-
-  const features = [
-    {
-      icon: readIcon,
-      title: "Read Methods",
-      description:
-        "Exposes a RESTful HTTP(S) API for metrics alongside a WebSocket WS(S) endpoint on the same port.",
-    },
-    {
-      icon: writeIcon,
-      title: "Write Methods",
-      description:
-        "Full SSL/TLS support with configurable cipher suites and certificate management.",
-    },
-    {
-      icon: deleteIcon,
-      title: "Delete Methods",
-      description:
-        "Token-based authentication system to secure your database server from unauthorized access.",
-    },
-  ].map((feature, index) => {
-    {
-      return (
-        <div
-          key={index}
-          className="bg-white rounded-xl p-6 shadow-lg border border-slate-100"
-        >
-          <div className="flex items-center justify-left gap-2">
-            {feature.icon}
-            <h3 className="font-semibold text-slate-800 mb-2">
-              {feature.title}
-            </h3>
-          </div>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            {feature.description}
-          </p>
+function T(method: {
+  name: string;
+  example: string;
+  category: string;
+  icon: JSX.Element;
+  signature: string;
+  description: string;
+}) {
+  const card = (
+    <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-6">
+      <div className="flex items-center justify-left gap-2">
+        {method.icon}
+        <h3 className="text-xl font-bold text-slate-800 mb-2">
+          <span className="text-[#555555]">DB</span>
+          <span className="text-[#ED9302]">{"<"}</span>
+          <span className="text-[#0269ED]">{"T"}</span>
+          <span className="text-[#ED9302]">{">"}</span>.{method.name}
+        </h3>
+        <div className="text-sm  font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded-full mb-1">
+          {method.category}
         </div>
-      );
-    }
-  });
-
-  function T(method: {
-    name: string;
-    example: string;
-    category: string;
-    icon: JSX.Element;
-    signature: string;
-    description: string;
-  }) {
-    const card = (
-      <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-6">
-        <div className="flex items-center justify-left gap-2">
-          {method.icon}
-          <h3 className="text-xl font-bold text-slate-800 mb-2">
-            <span className="text-[#555555]">DB</span>
-            <span className="text-[#ED9302]">{"<"}</span>
-            <span className="text-[#0269ED]">{"T"}</span>
-            <span className="text-[#ED9302]">{">"}</span>.{method.name}
-          </h3>
-          <div className="text-sm  font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded-full mb-1">
-            {method.category}
-          </div>
-        </div>
-
-        <div className="flex text-slate-600 mt-2 gap-1 flex-col sm:flex-row">
-          <div className="text-sm text-slate-500 font-bold">Signature :</div>
-          <div className="text-sm text-slate-500">
-            DB{"<T>"}.{method.signature}
-          </div>
-        </div>
-
-        <div className="flex text-slate-600 mt-2 mb-2 gap-1 flex-col sm:flex-row">
-          <div className="text-sm text-slate-500 font-bold">Description :</div>
-          <div className="text-sm text-slate-500">{method.description}</div>
-        </div>
-
-        <CodeBlock code={method.example} id="" language="typescript" />
       </div>
-    );
-    return card;
-  }
 
+      <div className="flex text-slate-600 mt-2 gap-1 flex-col sm:flex-row">
+        <div className="text-sm text-slate-500 font-bold">Signature :</div>
+        <div className="text-sm text-slate-500">
+          DB{"<T>"}.{method.signature}
+        </div>
+      </div>
+
+      <div className="flex text-slate-600 mt-2 mb-2 gap-1 flex-col sm:flex-row">
+        <div className="text-sm text-slate-500 font-bold">Description :</div>
+        <div className="text-sm text-slate-500">{method.description}</div>
+      </div>
+
+      <CodeBlock code={method.example} id="" language="typescript" />
+    </div>
+  );
+  return card;
+}
+
+export default function DatabaseMethods() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-violet-500 rounded-2xl mb-6 shadow-lg">
-          <FaDatabase className="w-8 h-8 text-white" />
-        </div>
-        <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
-          Database Methods
-        </h1>
-        <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-          Complete API reference for all CRUD operations and batch processing
-          capabilities in XenoDB.
-        </p>
-      </div>
+      {heading}
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         {features}
