@@ -1,4 +1,4 @@
-import CodeBlock from "../utilities/codeblock";
+import CodeBlock from "../utilities/CodeBlock";
 import { PiCertificateFill } from "react-icons/pi";
 import { FcDataConfiguration } from "react-icons/fc";
 import { FaKey, FaListCheck, FaServer, FaShield } from "react-icons/fa6";

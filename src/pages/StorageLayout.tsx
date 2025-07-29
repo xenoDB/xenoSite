@@ -1,5 +1,5 @@
 import useScrollRestoration from "../hooks/RetainScroll";
-import CodeBlock from "../utilities/codeblock";
+import CodeBlock from "../utilities/CodeBlock";
 import {
   FaClock,
   FaDatabase,

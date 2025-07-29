@@ -1,5 +1,5 @@
 import useScrollRestoration from "../hooks/RetainScroll";
-import CodeBlock from "../utilities/codeblock";
+import CodeBlock from "../utilities/CodeBlock";
 import { FaDatabase, FaTrash, FaUsers, FaBolt } from "react-icons/fa";
 
 export default function DatabaseMethods() {

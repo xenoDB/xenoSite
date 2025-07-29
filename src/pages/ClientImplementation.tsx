@@ -1,4 +1,4 @@
-import CodeBlock from "../utilities/codeblock";
+import CodeBlock from "../utilities/CodeBlock";
 import { FaBolt, FaCode, FaGlobe, FaShield } from "react-icons/fa6";
 import useScrollRestoration from "../hooks/RetainScroll";
 import { IoWarning } from "react-icons/io5";
