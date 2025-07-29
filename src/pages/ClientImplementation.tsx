@@ -63,15 +63,17 @@ const features = [
 
 const connect = (
   <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-xl">
-    <div className="flex items-center gap-2">
-      <IoWarning className="w-5 h-5 text-red-600" />
-      <h4 className="font-semibold text-red-800">Important :</h4>
-      <p className="text-red-700 text-sm mt-1">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:gap-2">
+      <div className="flex items-center gap-1 mb-1 sm:mb-0">
+        <IoWarning className="w-5 h-5 text-red-600" />
+        <h4 className="font-semibold text-red-800">Important :</h4>
+      </div>
+      <div className="text-red-700 text-sm">
         You must call{" "}
         <code className="bg-red-100 px-1 rounded">manager.connect()</code> and{" "}
         <code className="bg-red-100 px-1 rounded">await</code> for the promise
-        to resolve before attempting to create any database/s.
-      </p>
+        to resolve before creating any database/s.
+      </div>
     </div>
   </div>
 );
@@ -106,7 +108,7 @@ const ManagerSetup = (
 
 const noValidation = (
   <div className="mb-6">
-    <div className="flex items-center gap-1 mb-2">
+    <div className="flex gap-1 mb-2 flex-col sm:flex-row sm:items-center">
       <h3 className="text-lg font-semibold text-slate-700">
         1. No Schema Validation :
       </h3>
@@ -127,14 +129,14 @@ const noValidation = (
 
 const zodValidation = (
   <div className="mb-6">
-    <div className="flex items-center gap-1 mb-2">
+    <div className="flex flex-col sm:flex-row gap-1 mb-2 sm:items-center">
       <h3 className="text-lg font-semibold text-slate-700">
-        2. Zod ( Run-time validation ) :
+        2. Zod (Run-time validation) :
       </h3>
-      <p className="text-slate-600 text-sm mt-1">
+      <div className="text-slate-600 text-sm mt-1">
         Use Zod schemas for runtime validation. Perfect for ensuring data
         integrity and providing helpful error messages.
-      </p>
+      </div>
     </div>
     <CodeBlock
       code={
@@ -158,10 +160,10 @@ const zodValidation = (
 );
 
 const tsValidation = (
-  <div className="mb-6">
-    <div className="flex items-center gap-1 mb-2">
+  <div className="mb-6 items-center justify-left">
+    <div className="flex gap-1 mb-2 flex-col sm:flex-row sm:items-center">
       <h3 className="text-lg font-semibold text-slate-700">
-        3. TypeScript Generics ( Compile-time validation) :
+        3. TS Generic (Compile-time validation) :
       </h3>
       <p className="text-slate-600 text-sm mt-1">
         Use TypeScript generics for compile-time type checking for safety
@@ -210,7 +212,7 @@ const sslOptions = (
     <div className="flex-1 min-w-0">
       <h4 className="flex font-semibold text-purple-800 mb-1 gap-2">
         <FcDataConfiguration className="w-5 h-5 text-purple-600 mt-0.5" />
-        Server Configuration Options
+        DatabaseManager Config Options
       </h4>
       <div className="w-full overflow-auto rounded-md">
         <CodeBlock
