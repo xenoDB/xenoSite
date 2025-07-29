@@ -1,10 +1,7 @@
-import useScrollRestoration from "../hooks/RetainScroll";
+import { FaBolt, FaDatabase, FaTrash, FaUsers } from "react-icons/fa";
 import CodeBlock from "../utilities/CodeBlock";
-import { FaDatabase, FaTrash, FaUsers, FaBolt } from "react-icons/fa";
 
 export default function DatabaseMethods() {
-  useScrollRestoration();
-
   const methods = [
     {
       name: "all()",
@@ -115,49 +112,104 @@ console.log(\`Deleted \${deletedCount} out of \${results.length} users\`);`,
     },
   ];
 
-  const categoryColors = {
-    Read: "from-blue-500 to-cyan-500",
-    Write: "from-green-500 to-emerald-500",
-    Delete: "from-red-500 to-pink-500",
-    "Batch Read": "from-purple-500 to-violet-500",
-    "Batch Write": "from-orange-500 to-amber-500",
-    "Batch Delete": "from-rose-500 to-red-500",
-  };
+  const readIcon = (
+    <div className="w-7 h-7 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg flex items-center justify-center mb-2">
+      <FaDatabase className="w-5 h-5 text-blue-600" />
+    </div>
+  );
 
-  const performanceExample = `// Example: Efficient batch operations
-const userIds = ["user1", "user2", "user3", "user4", "user5"];
+  const writeIcon = (
+    <div className="w-7 h-7 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg flex items-center justify-center mb-2">
+      <FaBolt className="w-5 h-5 text-green-600" />
+    </div>
+  );
 
-// ❌ Inefficient: Multiple individual requests
-const users1 = [];
-for (const id of userIds) {
-  const user = await DB.get(id);
-  users1.push(user);
-}
+  const deleteIcon = (
+    <div className="w-7 h-7 bg-gradient-to-br from-red-100 to-pink-100 rounded-lg flex items-center justify-center mb-2">
+      <FaTrash className="w-5 h-5 text-red-600" />
+    </div>
+  );
 
-// ✅ Efficient: Single batch request
-const users2 = await DB.getMany(userIds);
-
-// Performance improvement: ~5x faster for 5 items
-// Scales even better with more items`;
-
-  const errorHandlingExample = `// Example: Proper error handling
-try {
-  // Create user with validation
-  const user = await DB.set("user123", {
-    id: "user123",
-    name: "Alice Smith",
-    email: "alice@example.com",
-    age: 30
+  const features = [
+    {
+      icon: readIcon,
+      title: "Read Methods",
+      description:
+        "Exposes a RESTful HTTP(S) API for metrics alongside a WebSocket WS(S) endpoint on the same port.",
+    },
+    {
+      icon: writeIcon,
+      title: "Write Methods",
+      description:
+        "Full SSL/TLS support with configurable cipher suites and certificate management.",
+    },
+    {
+      icon: deleteIcon,
+      title: "Delete Methods",
+      description:
+        "Token-based authentication system to secure your database server from unauthorized access.",
+    },
+  ].map((feature, index) => {
+    {
+      return (
+        <div
+          key={index}
+          className="bg-white rounded-xl p-6 shadow-lg border border-slate-100"
+        >
+          <div className="flex items-center justify-left gap-2">
+            {feature.icon}
+            <h3 className="font-semibold text-slate-800 mb-2">
+              {feature.title}
+            </h3>
+          </div>
+          <p className="text-sm text-slate-600 leading-relaxed">
+            {feature.description}
+          </p>
+        </div>
+      );
+    }
   });
-  
-  console.log("User created:", user);
-} catch (error) {
-  if (error.message.includes("validation")) {
-    console.error("Invalid user data:", error.message);
-  } else {
-    console.error("Database error:", error);
+
+  function T(method: {
+    icon: any;
+    name: string;
+    example: string;
+    category: string;
+    signature: string;
+    description: string;
+  }) {
+    const card = (
+      <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-6">
+        <div className="flex items-center justify-left gap-2">
+          {method.icon}
+          <h3 className="text-xl font-bold text-slate-800 mb-2">
+            <span className="text-[#555555]">DB</span>
+            <span className="text-[#ED9302]">{"<"}</span>
+            <span className="text-[#0269ED]">{"T"}</span>
+            <span className="text-[#ED9302]">{">"}</span>.{method.name}
+          </h3>
+          <div className="text-sm  font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded-full mb-1">
+            {method.category}
+          </div>
+        </div>
+
+        <div className="flex text-slate-600 mt-2 gap-1 flex-col sm:flex-row">
+          <div className="text-sm text-slate-500 font-bold">Signature :</div>
+          <div className="text-sm text-slate-500">
+            DB{"<T>"}.{method.signature}
+          </div>
+        </div>
+
+        <div className="flex text-slate-600 mt-2 mb-2 gap-1 flex-col sm:flex-row">
+          <div className="text-sm text-slate-500 font-bold">Description :</div>
+          <div className="text-sm text-slate-500">{method.description}</div>
+        </div>
+
+        <CodeBlock code={method.example} id="" language="typescript" />
+      </div>
+    );
+    return card;
   }
-}`;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -175,178 +227,11 @@ try {
         </p>
       </div>
 
-      {/* Quick Overview */}
-      <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">
-        <h2 className="text-2xl font-bold text-slate-800 mb-6">
-          Quick Overview
-        </h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="text-center p-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <FaDatabase className="w-6 h-6 text-blue-600" />
-            </div>
-            <h3 className="font-semibold text-slate-800 mb-2">
-              3 Read Methods
-            </h3>
-            <p className="text-sm text-slate-600">all(), has(), get()</p>
-          </div>
-          <div className="text-center p-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <FaBolt className="w-6 h-6 text-green-600" />
-            </div>
-            <h3 className="font-semibold text-slate-800 mb-2">
-              3 Batch Methods
-            </h3>
-            <p className="text-sm text-slate-600">
-              getMany(), setMany(), deleteMany()
-            </p>
-          </div>
-          <div className="text-center p-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-red-100 to-pink-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <FaTrash className="w-6 h-6 text-red-600" />
-            </div>
-            <h3 className="font-semibold text-slate-800 mb-2">
-              2 Write Methods
-            </h3>
-            <p className="text-sm text-slate-600">set(), delete()</p>
-          </div>
-        </div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        {features}
       </div>
 
-      {/* Method Reference */}
-      <div className="space-y-8 mb-12">
-        <h2 className="text-2xl font-bold text-slate-800">Method Reference</h2>
-
-        {methods.map((method, index) => {
-          const Icon = method.icon;
-          const gradientClass =
-            categoryColors[method.category as keyof typeof categoryColors];
-
-          return (
-            <div
-              key={index}
-              className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100"
-            >
-              <div className="flex flex-col lg:flex-row lg:items-start lg:space-x-8">
-                <div className="lg:w-1/3 mb-6 lg:mb-0">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div
-                      className={`w-10 h-10 bg-gradient-to-br ${gradientClass} rounded-lg flex items-center justify-center`}
-                    >
-                      <Icon className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-800">
-                        {method.name}
-                      </h3>
-                      <span className="text-sm text-slate-500 bg-slate-100 px-2 py-1 rounded-full">
-                        {method.category}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-slate-600 mb-4">{method.description}</p>
-                  <div className="bg-slate-50 p-3 rounded-lg">
-                    <h4 className="text-sm font-semibold text-slate-700 mb-1">
-                      Type Signature
-                    </h4>
-                    <code className="text-sm text-slate-800">
-                      {method.signature}
-                    </code>
-                  </div>
-                </div>
-
-                <div className="lg:w-2/3">
-                  <h4 className="text-lg font-semibold text-slate-700 mb-3">
-                    Example Usage
-                  </h4>
-                  <CodeBlock
-                    code={method.example}
-                    language="typescript"
-                    id={`method-${index}`}
-                  />
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Performance Tips */}
-      <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">
-        <h2 className="text-2xl font-bold text-slate-800 mb-6">
-          Performance Optimization
-        </h2>
-        <p className="text-slate-600 mb-6">
-          Use batch operations when working with multiple keys to significantly
-          improve performance and reduce network overhead.
-        </p>
-        <CodeBlock
-          code={performanceExample}
-          language="typescript"
-          id="performance-example"
-        />
-        <div className="mt-6 grid md:grid-cols-2 gap-4">
-          <div className="p-4 bg-green-50 border border-green-200 rounded-xl">
-            <h4 className="font-semibold text-green-800 mb-2">
-              ✅ Best Practices
-            </h4>
-            <ul className="text-green-700 text-sm space-y-1">
-              <li>• Use batch methods for multiple operations</li>
-              <li>• Check existence with has() before get() if needed</li>
-              <li>• Handle null returns from get() and getMany()</li>
-              <li>• Use meaningful key naming conventions</li>
-            </ul>
-          </div>
-          <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl">
-            <h4 className="font-semibold text-amber-800 mb-2">
-              ⚠️ Performance Tips
-            </h4>
-            <ul className="text-amber-700 text-sm space-y-1">
-              <li>• Batch operations are ~5-10x faster</li>
-              <li>• Limit batch sizes to 100-1000 items</li>
-              <li>• Use all() sparingly for large databases</li>
-              <li>• Consider pagination for large result sets</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Error Handling */}
-      <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
-        <h2 className="text-2xl font-bold text-slate-800 mb-6">
-          Error Handling
-        </h2>
-        <p className="text-slate-600 mb-6">
-          All database methods return Promises and should be wrapped in
-          try-catch blocks for proper error handling.
-        </p>
-        <CodeBlock
-          code={errorHandlingExample}
-          language="typescript"
-          id="error-handling"
-        />
-        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-          <h4 className="font-semibold text-blue-800 mb-2">💡 Error Types</h4>
-          <ul className="text-blue-700 text-sm space-y-1">
-            <li>
-              • <strong>Validation errors:</strong> When using Zod schemas and
-              data doesn't match
-            </li>
-            <li>
-              • <strong>Network errors:</strong> Connection issues or server
-              unavailability
-            </li>
-            <li>
-              • <strong>Timeout errors:</strong> Operations taking longer than
-              2.5 seconds
-            </li>
-            <li>
-              • <strong>Authentication errors:</strong> Invalid or missing auth
-              tokens
-            </li>
-          </ul>
-        </div>
-      </div>
+      {methods.map(T)}
     </div>
   );
 }
