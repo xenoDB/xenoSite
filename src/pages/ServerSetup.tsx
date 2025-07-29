@@ -61,7 +61,7 @@ const features = [
 });
 
 const serverSetup = (
-  <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">
+  <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg border border-slate-100 mb-12">
     <h2 className="text-2xl font-bold text-slate-800 mb-6">
       Server Setup & Configuration :
     </h2>
@@ -156,7 +156,7 @@ const certificateManagement = (
 );
 
 const configInfoTable = (
-  <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">
+  <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg border border-slate-100 mb-12">
     <h2 className="text-2xl font-bold text-slate-800 mb-6">
       SSL Setup & Configuration :
     </h2>
@@ -170,7 +170,7 @@ const configInfoTable = (
 );
 
 const info = (
-  <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
+  <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg border border-slate-100">
     <h2 className="text-2xl font-bold text-slate-800 mb-6">
       Other relevant informations :
     </h2>

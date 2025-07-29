@@ -316,7 +316,7 @@ function T(method: {
   description: string;
 }) {
   const card = (
-    <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-6">
+    <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg border border-slate-100 mb-6">
       <div className="flex items-center justify-left gap-2">
         {method.icon}
         <h3 className="text-xl font-bold text-slate-800 mb-2">

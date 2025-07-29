@@ -79,7 +79,7 @@ const connect = (
 );
 
 const ManagerSetup = (
-  <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">
+  <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg border border-slate-100 mb-12">
     <h2 className="text-2xl font-bold text-slate-800 mb-6">
       Server Setup & Configuration :
     </h2>
@@ -190,7 +190,7 @@ const tsValidation = (
 );
 
 const DatabaseSetup = (
-  <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">
+  <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg border border-slate-100 mb-12">
     <div className="mb-6">
       <h2 className="text-2xl font-bold text-slate-800 ">
         Database Creation and Schema validation :
@@ -273,7 +273,7 @@ const zodBenefits = (
 );
 
 const InfoTable = (
-  <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">
+  <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg border border-slate-100 mb-12">
     <h2 className="text-2xl font-bold text-slate-800 mb-6">
       Other relevant informations :
     </h2>
@@ -287,7 +287,7 @@ const InfoTable = (
 );
 
 const bestPractices = (
-  <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
+  <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg border border-slate-100">
     <h2 className="text-2xl font-bold text-slate-800 mb-6">Best practices :</h2>
     <div className="flex items-start space-x-3 p-4 bg-blue-50 border border-blue-200 rounded-xl lg:col-span-2">
       <div>

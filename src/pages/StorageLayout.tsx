@@ -129,7 +129,7 @@ console.log("Recovery complete!");`;
       </div>
 
       {/* Storage Structure */}
-      <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">
+      <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg border border-slate-100 mb-12">
         <h2 className="text-2xl font-bold text-slate-800 mb-6">
           Storage Directory Structure
         </h2>
@@ -167,7 +167,7 @@ console.log("Recovery complete!");`;
       </div>
 
       {/* Sharding System */}
-      <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">
+      <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg border border-slate-100 mb-12">
         <h2 className="text-2xl font-bold text-slate-800 mb-6">
           Intelligent Sharding
         </h2>
@@ -240,7 +240,7 @@ console.log("Recovery complete!");`;
       </div>
 
       {/* Logging System */}
-      <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 mb-12">
+      <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg border border-slate-100 mb-12">
         <h2 className="text-2xl font-bold text-slate-800 mb-6">
           Operation Logging
         </h2>
@@ -307,7 +307,7 @@ console.log("Recovery complete!");`;
       </div>
 
       {/* Recovery Engine */}
-      <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
+      <div className="bg-white rounded-2xl p-4 md:p-6 lg:p-8 shadow-lg border border-slate-100">
         <h2 className="text-2xl font-bold text-slate-800 mb-6">
           Recovery Engine
         </h2>
