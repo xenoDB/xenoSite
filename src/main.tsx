@@ -5,6 +5,7 @@ import Footer from "./components/Footer.tsx";
 import { createRoot } from "react-dom/client";
 import Navigation from "./components/Navbar.tsx";
 import ServerSetup from "./pages/ServerSetup.tsx";
+import PageNavigation from "./components/Nav.tsx";
 import StorageLayout from "./pages/StorageLayout.tsx";
 import DatabaseMethods from "./pages/DatabaseMethods.tsx";
 import ScrollToTopButton from "./components/ScrollToTopButton.tsx";
@@ -19,6 +20,7 @@ export const RootLayout = () => {
         <Outlet />
         <ScrollToTopButton />
       </main>
+      <PageNavigation />
       <Footer />
     </div>
   );

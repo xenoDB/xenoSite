@@ -2,6 +2,7 @@ import { JSX, useState } from "react";
 import CodeBlock from "../utilities/CodeBlock";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { FaDatabase, FaEye, FaPenNib, FaSearch } from "react-icons/fa";
+import useScrollRestoration from "../hooks/RetainScroll";
 
 const heading = (
   <div className="text-center mb-12">
@@ -349,6 +350,8 @@ function T(method: {
 }
 
 export default function DatabaseMethods() {
+  useScrollRestoration();
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredMethods = methods.filter((method) =>
