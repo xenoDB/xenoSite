@@ -75,7 +75,7 @@ const serverSetup = (
         `  auth: "YOUR_SECRET_TOKEN",\n` +
         `});\n` +
         `\n` +
-        `server.onStdout(msg => console.log(\`\${new Date().toLocaleString()} - [DATABASE_SERVER] - \${msg}\`));\n` +
+        `server.onStdout = (msg) => console.log(\`\${new Date().toLocaleString()} - [DATABASE_SERVER] - \${msg}\`);\n` +
         `\n` +
         `// Calling \`new DatabaseServer(...)\` automatically starts the server on the port you specified above.`
       }
